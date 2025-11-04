@@ -10,6 +10,16 @@ option(BUILD_ASSIGNMENT_01_OPTION_1 "Build Assignment Option 1 (Standard)" OFF)
 
 add_executable(Assignment-01
     main.cpp
+        TSong.cpp
+        TSong.h
+        TLinkedList.cpp
+        TLinkedList.h
+        TNode.cpp
+        TNode.h
+        TQueue.cpp
+        TQueue.h
+        TStack.cpp
+        TStack.h
 )
 
 # Conditionally add the correct source file

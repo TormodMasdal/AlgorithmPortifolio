@@ -1,3 +1,4 @@
+/*
 #pragma once
 #include <stdexcept> // For std::runtime_error
 
@@ -71,3 +72,4 @@ template <typename T, int MAX_SIZE>
 bool TQueue<T, MAX_SIZE>::IsFull() const {
     return count == MAX_SIZE;
 }
+*/
