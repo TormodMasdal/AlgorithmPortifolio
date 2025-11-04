@@ -13,7 +13,6 @@ class TQueue {
 public:
     explicit TQueue(int aMaxSize);
     ~TQueue();
-
     void Enqueue(T* aSong);
     void FrontOfQueue(T* aSong);
     T* Dequeue();
@@ -21,6 +20,9 @@ public:
     [[nodiscard]] bool IsEmpty() const;
 
     static T* PlayNextSong();
+
+    static T* UserAddSong();
+
 
 private:
     int size;

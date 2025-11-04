@@ -75,6 +75,21 @@ void TLinkedList<T>::Delete(T *aSong) {
     }
 }
 
+template<typename T>
+void TLinkedList<T>::PrintList() {
+
+    auto* temp = head->GetNextPtr();
+    while (temp != tail) {
+        std::cout << "  Artist: " << temp->GetData()->GetArtist() << "\n";
+        std::cout << "  Title: " << temp->GetData()->GetTitle() << "\n";
+        std::cout << "  Year: " << temp->GetData()->GetYear() << "\n";
+        std::cout << "  Genre: " << temp->GetData()->GetGenre() << "\n";
+        std::cout << "  Source: " << temp->GetData()->GetSource() << "\n\n";
+        temp = temp->GetNextPtr();
+    }
+}
+
+
 template class TLinkedList<TSong>;
 template class TNode<TSong>;
 template class TNode<TSong*>;

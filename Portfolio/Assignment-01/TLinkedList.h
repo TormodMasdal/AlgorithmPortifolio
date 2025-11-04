@@ -19,6 +19,8 @@ public:
     TNode<T>* GetHead();
     TNode<T>* GetTail();
 
+    void PrintList();
+
 
 
 private:

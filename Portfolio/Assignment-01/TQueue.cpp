@@ -1,5 +1,9 @@
 #include "TQueue.h"
+
+#include <limits>
+
 #include "iostream"
+#include "TLinkedList.h"
 #include "TStack.h"
 
 template<typename T>
@@ -59,12 +63,10 @@ T* TQueue<T>::PlayNextSong() {
     // If the wish queue has data dequeue from the wishlist
     if (!WishQueue->IsEmpty()) {
         TSong* song = WishQueue->Dequeue();
-        HistoryStack->Push(song);
         return song;
     }
     // If the wishlist is empty play from the main queue
     TSong* song = MainQueue->Dequeue();
-    HistoryStack->Push(song);
     return song;
 }
 
@@ -78,6 +80,22 @@ void TQueue<T>::FrontOfQueue(T *aSong) {
     arr[front] = aSong;
     count++;
 }
+
+template<typename T>
+T *TQueue<T>::UserAddSong() {
+    std::cout << "Please enter name of the song you wish to play (exactly as listed in the library): ";
+    std::string songName;
+    std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+    std::getline(std::cin, songName);
+
+    // The library is rather short, therefore use a linear search
+    auto* temp = songLibrary->GetHead()->GetNextPtr();
+    while (temp->GetData()->GetTitle() != songName) {
+        temp = temp->GetNextPtr();
+    }
+    return temp->GetData();
+}
+
 
 template class TQueue<TSong>;
 

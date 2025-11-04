@@ -20,6 +20,8 @@ add_executable(Assignment-01
         TQueue.h
         TStack.cpp
         TStack.h
+        menu.cpp
+        menu.h
 )
 
 # Conditionally add the correct source file

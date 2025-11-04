@@ -7,6 +7,7 @@
 #include "TQueue.h"
 #include "TSong.h"
 #include "../../LibExample/queue.hpp"
+#include "menu.h"
 
 
 
@@ -25,17 +26,14 @@ static bool SongReadCallback(const int aIndex, const int aTotalCount, const std:
 
 
 int RunApp() {
-	// Implement the Console Music Player application logic here
 
 	std::string filename = "C:/Users/tormo/IKT203Exam/IKT203Exam/DATA/songs.txt"; // Specify the path to the songs file
 	ReadSongsFromFile(filename, SongReadCallback);
 
-	// Queues the entire main queue from the linked list
-	TNode<TSong>* iterator = songLibrary->GetHead()->GetNextPtr();
-	while (iterator != songLibrary->GetTail()) {
-		MainQueue->Enqueue(iterator->GetData());
-		iterator = iterator->GetNextPtr();
-	}
+
+
+	RunMenu();
+
 
 	
 

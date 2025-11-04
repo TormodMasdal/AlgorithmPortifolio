@@ -6,7 +6,6 @@
 #define TSONG_H
 #include "iostream"
 
-
 class TSong {
 
 public:
@@ -23,6 +22,8 @@ public:
     std::string GetYear();
     std::string GetGenre();
     std::string GetSource();
+
+    static void PrintSong(TSong* aSong);
 
 private:
     std::string artist;

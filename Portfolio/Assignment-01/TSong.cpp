@@ -28,6 +28,19 @@ std::string TSong::GetYear() {
     return year;
 }
 
+void TSong::PrintSong(TSong* aSong) {
+
+    if (aSong == nullptr) {
+        std::cout << "Found no song" << std::endl;
+        return;
+    }
+    std::cout << "  Artist: " << aSong->GetArtist() << "\n";
+    std::cout << "  Title: " << aSong->GetTitle() << "\n";
+    std::cout << "  Year: " << aSong->GetYear() << "\n";
+    std::cout << "  Genre: " << aSong->GetGenre() << "\n";
+    std::cout << "  Source: " << aSong->GetSource() << "\n\n";
+}
+
 
 
 
