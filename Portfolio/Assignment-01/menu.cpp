@@ -1,8 +1,8 @@
 #include "menu.h"
 #include "iostream"
-#include "TLinkedList.h"
-#include "TQueue.h"
-#include "TStack.h"
+#include "../SharedLib/TLinkedList.h"
+#include "../SharedLib/TQueue.h"
+#include "../SharedLib/TStack.h"
 
 
 

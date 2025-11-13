@@ -46,7 +46,8 @@ void DijkstrasAlgorithm(const GraphType& aGraph, const std::string& aSource, con
 	distances[aSource] = 0;
 
 	TMinHeap minHeap;
-	minHeap.Add({aSource, 0});
+	minHeap.Add({aSource, 0}); // Adds the source to the minheap, giving it length of 0
+
 
 	while (minHeap.Size() != 0) {
 		auto [currentNode, currentDist] = minHeap.ExtractMin();

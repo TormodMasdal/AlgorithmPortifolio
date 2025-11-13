@@ -3,8 +3,8 @@
 #include <iostream>
 #include "option2.h"
 #include "SharedLib.h"
-#include "TLinkedList.h"
-#include "TQueue.h"
+#include "../SharedLib/TLinkedList.h"
+#include "../SharedLib/TQueue.h"
 #include "TSong.h"
 #include "../../LibExample/queue.hpp"
 #include "menu.h"

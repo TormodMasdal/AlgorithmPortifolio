@@ -12,6 +12,8 @@ add_executable(Assignment-04
     main.cpp
         TMinHeap.cpp
         TMinHeap.h
+        Edge.cpp
+        Edge.h
 )
 
 if(BUILD_ASSIGNMENT_04_OPTION_1)

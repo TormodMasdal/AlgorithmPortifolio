@@ -1,7 +1,7 @@
 #ifndef TLINKEDLIST_H
 #define TLINKEDLIST_H
 #include "TNode.h"
-#include "TSong.h"
+#include "../Assignment-01/TSong.h"
 
 template <typename T>
 class TNode;
