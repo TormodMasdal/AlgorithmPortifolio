@@ -1,0 +1,10 @@
+^C:\USERS\TORMO\IKT203EXAM\IKT203EXAM\BUILD\CMAKEFILES\87D4308662102E6C1B2A375F801D5AFC\GENERATE.STAMP.RULE
+setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -SC:/Users/tormo/IKT203Exam/IKT203Exam -BC:/Users/tormo/IKT203Exam/IKT203Exam/build --check-stamp-list CMakeFiles/generate.stamp.list --vs-solution-file C:/Users/tormo/IKT203Exam/IKT203Exam/build/IKT203_Course_Assignments.sln
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal & call :cmErrorLevel %errorlevel% & goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd

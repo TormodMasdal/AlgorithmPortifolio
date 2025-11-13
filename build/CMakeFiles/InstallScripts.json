@@ -1,0 +1,20 @@
+{
+	"InstallScripts" : 
+	[
+		"C:/Users/tormo/IKT203Exam/IKT203Exam/build/cmake_install.cmake",
+		"C:/Users/tormo/IKT203Exam/IKT203Exam/build/LibExample/cmake_install.cmake",
+		"C:/Users/tormo/IKT203Exam/IKT203Exam/build/Submissions/cmake_install.cmake",
+		"C:/Users/tormo/IKT203Exam/IKT203Exam/build/Submissions/Submission-01/cmake_install.cmake",
+		"C:/Users/tormo/IKT203Exam/IKT203Exam/build/Submissions/Submission-02/cmake_install.cmake",
+		"C:/Users/tormo/IKT203Exam/IKT203Exam/build/Submissions/Submission-03/cmake_install.cmake",
+		"C:/Users/tormo/IKT203Exam/IKT203Exam/build/Submissions/Submission-04/cmake_install.cmake",
+		"C:/Users/tormo/IKT203Exam/IKT203Exam/build/Submissions/Submission-05/cmake_install.cmake",
+		"C:/Users/tormo/IKT203Exam/IKT203Exam/build/Portfolio/cmake_install.cmake",
+		"C:/Users/tormo/IKT203Exam/IKT203Exam/build/Portfolio/Assignment-01/cmake_install.cmake",
+		"C:/Users/tormo/IKT203Exam/IKT203Exam/build/Portfolio/Assignment-02/cmake_install.cmake",
+		"C:/Users/tormo/IKT203Exam/IKT203Exam/build/Portfolio/Assignment-03/cmake_install.cmake",
+		"C:/Users/tormo/IKT203Exam/IKT203Exam/build/Portfolio/Assignment-04/cmake_install.cmake",
+		"C:/Users/tormo/IKT203Exam/IKT203Exam/build/Portfolio/SharedLib/cmake_install.cmake"
+	],
+	"Parallel" : false
+}

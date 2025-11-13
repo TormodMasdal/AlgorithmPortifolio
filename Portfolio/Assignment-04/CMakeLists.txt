@@ -6,10 +6,12 @@ set(CMAKE_AUTORCC ON)
 set(CMAKE_AUTOUIC ON)
 
 # "ON" = build Option 1, "OFF" = build Option 2.
-option(BUILD_ASSIGNMENT_04_OPTION_1 "Build Assignment Option 1 (Standard)" OFF)
+option(BUILD_ASSIGNMENT_04_OPTION_1 "Build Assignment Option 1 (Standard)" ON)
 
 add_executable(Assignment-04
     main.cpp
+        TMinHeap.cpp
+        TMinHeap.h
 )
 
 if(BUILD_ASSIGNMENT_04_OPTION_1)
