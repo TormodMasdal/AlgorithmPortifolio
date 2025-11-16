@@ -1,5 +1,8 @@
 #ifndef TBSTNode_HPP
 #define TBSTNode_HPP
+#include <queue>
+
+//#include "TQueue.h"
 
 template <typename Key, typename Data>
 class TBSTNode {
@@ -90,6 +93,67 @@ public:
 		}
 		return searchRecursive(node->rightChild, aKey);
 	}
+
+	// Visit the left subtree first, then process the current node, and finally traverse the right subtree
+	static void inorder(TBSTNode* node) {
+		if (!node) {
+			return;
+		}
+		inorder(node->leftChild);
+		std::cout << node->key << " ";
+		inorder(node->rightChild);
+	}
+
+	// Visit the current node first, then you traverse its left subtree, and finally its right subtree
+	static void preorder(TBSTNode* node) {
+		if (!node) {
+			return;
+		}
+		std::cout << node->key << " ";
+		preorder(node->leftChild);
+		preorder(node->rightChild);
+	}
+
+	// Visit the left and right subtrees first, and process the current node last
+	static void postorder(TBSTNode* node) {
+		if (!node) {
+			return;
+		}
+		postorder(node->leftChild);
+		postorder(node->rightChild);
+		std::cout << node->key << " ";
+	}
+
+	static void levelOrder(TBSTNode* root) {
+		if (!root) {
+			return;
+		}
+
+		std::queue<TBSTNode*> queue;
+		queue.push(root);
+		int level = 0;
+
+		while (!queue.empty()) {
+			int nodesAtThisLevel = queue.size();
+
+			std::cout << "Level " << level << ": ";
+
+			for (int i = 0; i < nodesAtThisLevel; i++) {
+				TBSTNode* node = queue.front();
+				queue.pop();
+
+				std::cout << node->key << " ";
+
+				if (node->leftChild)  queue.push(node->leftChild);
+				if (node->rightChild) queue.push(node->rightChild);
+			}
+
+			std::cout << std::endl;
+			level++;
+		}
+	}
+
+
 };
 
 #endif

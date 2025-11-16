@@ -7,7 +7,7 @@
 template <typename Key, typename Data>
 class TBST {
 private:
-	TBSTNode<Key, Data> * root;
+	TBSTNode<Key, Data>* root;
 
 public:
 	// Constructor that initializes an empty tree
@@ -24,6 +24,11 @@ public:
 	bool search(Key aKey) {
 		return TBSTNode<Key, Data>::searchRecursive(root, aKey) != nullptr; // Returns true if a node is found and false if not
 	}
+
+	void printInorder() { TBSTNode<Key, Data>::inorder(root); }
+	void printPreorder() { TBSTNode<Key, Data>::preorder(root); }
+	void printPostorder() { TBSTNode<Key, Data>::postorder(root); }
+	void printLevelOrder(){ TBSTNode<Key, Data>::levelOrder(root); }
 };
 
 #endif
