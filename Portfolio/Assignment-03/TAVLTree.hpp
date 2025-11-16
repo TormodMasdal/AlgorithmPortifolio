@@ -17,9 +17,18 @@ public:
         root = TAVLTreeNode<Key, Data>::insertRecursive(root, aKey, aData);
     }
 
+    void remove(Key aKey) {
+        root = TAVLTreeNode<Key, Data>::deleteRecursive(root, aKey);
+    }
+
     bool search(Key aKey) {
         return TAVLTreeNode<Key, Data>::searchRecursive(root, aKey) != nullptr;
     }
+
+    void printInorder() { TAVLTreeNode<Key, Data>::inorder(root); }
+    void printPreorder() { TAVLTreeNode<Key, Data>::preorder(root); }
+    void printPostorder() { TAVLTreeNode<Key, Data>::postorder(root); }
+    void printLevelOrder(){ TAVLTreeNode<Key, Data>::levelOrder(root); }
 };
 
 #endif

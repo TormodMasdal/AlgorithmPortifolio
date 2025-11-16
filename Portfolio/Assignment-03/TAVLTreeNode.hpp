@@ -12,7 +12,7 @@ private:
         return node ? node->height : 0;
     }
 
-    static int getBalanceFactor(TAVLTreeNode* node) {
+        static int getBalanceFactor(TAVLTreeNode* node) {
         if (node == nullptr) return 0;
         return getHeight(node->leftChild) - getHeight(node->rightChild);
     }
@@ -76,12 +76,10 @@ public:
         int balance = getBalanceFactor(node);
 
         // 1) Left-Left case
-        if (balance > 1 && aKey < node->leftChild->key)
-            return rotateRight(node);
+        if (balance > 1 && aKey < node->leftChild->key) return rotateRight(node);
 
         // 2) Right-Right case
-        if (balance < -1 && aKey > node->rightChild->key)
-            return rotateLeft(node);
+        if (balance < -1 && aKey > node->rightChild->key) return rotateLeft(node);
 
         // 3) Left-Right case
         if (balance > 1 && aKey > node->leftChild->key) {
@@ -101,6 +99,82 @@ public:
         return node;
     }
 
+    // Helper function to find in-order successor(smallest value in the right subtree)
+    static TAVLTreeNode* findMinValueNode(TAVLTreeNode* node)
+    {
+        TAVLTreeNode* current = node;
+        while (current && current->leftChild != nullptr) {
+            current = current->leftChild;
+        }
+        return current;
+    }
+
+    static TAVLTreeNode* deleteRecursive(TAVLTreeNode* node, Key aKey) {
+        if (node == nullptr) return node;
+
+        // If key value is less than the nodes->key value go left
+        if (aKey < node->key) {
+            node->leftChild = deleteRecursive(node->leftChild, aKey);
+        }
+        // If key value is more than the nodes->key value go right
+        else if (aKey > node->key) {
+            node->rightChild = deleteRecursive(node->rightChild, aKey);
+        }
+        // If none of the conditions above are true, then we found the node we want to delete
+        else {
+            // Case 1: No children
+            if (node->leftChild == nullptr && node->rightChild == nullptr) {
+                delete node; // Delete the node
+                node = nullptr; // Set it as nullptr because it still has an address
+            }
+            // Case 2: One child
+            else if (node->leftChild == nullptr) {
+                TAVLTreeNode* temp = node; // Store the node we want to delete
+                node = node->rightChild; // Move the right child
+                delete temp;
+            }
+            else if (node->rightChild == nullptr) {
+                TAVLTreeNode* temp = node;
+                node = node->leftChild;
+                delete temp;
+            }
+            // Case 3: 2 children
+            else {
+                TAVLTreeNode* temp = findMinValueNode(node->rightChild);
+                node->key = temp->key;
+                node->data = temp->data;
+                node->rightChild = deleteRecursive(node->rightChild, temp->key);
+            }
+        }
+        // After deletion we need to rebalance the tree
+
+        if (node == nullptr) return node;
+
+        // Update the height
+        node->height = 1 + std::max(getHeight(node->leftChild),getHeight(node->rightChild));
+
+        int balance = getBalanceFactor(node);
+
+        // 1) Left-Left case
+        if (balance > 1 && getBalanceFactor(node->leftChild) >= 0) return rotateRight(node);
+
+        // 2) Right-Right case
+        if (balance < -1 && getBalanceFactor(node->rightChild) <= 0) return rotateLeft(node);
+
+        // 3) Left-Right case
+        if (balance > 1 && getBalanceFactor(node->leftChild) < 0) {
+            node->leftChild = rotateLeft(node->leftChild);
+            return rotateRight(node);
+        }
+
+        // 4) Right-Left case
+        if (balance < -1 && getBalanceFactor(node->rightChild) > 0) {
+            node->rightChild = rotateRight(node->rightChild);
+            return rotateLeft(node);
+        }
+        return node;
+    }
+
     static TAVLTreeNode* searchRecursive(TAVLTreeNode* node, Key aKey) {
         // Base case
         if (node == nullptr || node->key == aKey) return node;
@@ -109,6 +183,58 @@ public:
             return searchRecursive(node->leftChild, aKey);
         }
         return searchRecursive(node->rightChild, aKey);
+    }
+
+    // Visit the left subtree first, then process the current node, and finally traverse the right subtree
+    static void inorder(TAVLTreeNode* node) {
+        if (!node) return;
+        inorder(node->leftChild);
+        std::cout << node->key << " ";
+        inorder(node->rightChild);
+    }
+
+    // Visit the current node first, then you traverse its left subtree, and finally its right subtree
+    static void preorder(TAVLTreeNode* node) {
+        if (!node) return;
+        std::cout << node->key << " ";
+        preorder(node->leftChild);
+        preorder(node->rightChild);
+    }
+
+    // Visit the left and right subtrees first, and process the current node last
+    static void postorder(TAVLTreeNode* node) {
+        if (!node) return;
+        postorder(node->leftChild);
+        postorder(node->rightChild);
+        std::cout << node->key << " ";
+    }
+
+    // Performs a Breadth-First Search (BFS), visit level by level
+    static void levelOrder(TAVLTreeNode* root) {
+        if (!root) return;
+
+        std::queue<TAVLTreeNode*> queue;
+        queue.push(root);
+        int level = 0;
+
+        while (!queue.empty()) {
+            int nodesAtThisLevel = queue.size();
+
+            std::cout << "Level " << level << ": ";
+
+            for (int i = 0; i < nodesAtThisLevel; i++) {
+                TAVLTreeNode* node = queue.front();
+                queue.pop();
+
+                std::cout << node->key << " ";
+
+                if (node->leftChild)  queue.push(node->leftChild);
+                if (node->rightChild) queue.push(node->rightChild);
+            }
+
+            std::cout << std::endl;
+            level++;
+        }
     }
 };
 

@@ -16,19 +16,17 @@ public:
 
 	static TBSTNode* insertRecursive(TBSTNode* node, Key aKey, Data aData) {
 		// Base case
-		if (node == nullptr) {
-			return new TBSTNode(aKey, aData) ;
-		}
+		if (node == nullptr) return new TBSTNode(aKey, aData);
 
 		// Recursive step, if key value is less than the nodes->key value go left
 		if (aKey < node->key) {
 			node->leftChild = insertRecursive(node->leftChild, aKey, aData);
 		}
-		// If key value is less than the nodes->key value go right
+		// If key value is more than the nodes->key value go right
 		else if (aKey > node->key) {
 			node->rightChild = insertRecursive(node->rightChild, aKey, aData);
 		}
-		// If aKey == node->key, we do nothing since keys are guaranteed to be uniqu
+		// If aKey == node->key, we do nothing since keys are guaranteed to be unique
 		return node;
 	}
 
@@ -43,13 +41,14 @@ public:
 	}
 
 	static TBSTNode* deleteRecursive(TBSTNode* node, Key aKey) {
-		if (node == nullptr) {
-			return node;
-		}
+		// Base case
+		if (node == nullptr) return node;
 
+		// Recursive step, if key value is less than the nodes->key value go left
 		if (aKey < node->key) {
 			node->leftChild = deleteRecursive(node->leftChild, aKey);
 		}
+		// If key value is more than the nodes->key value go right
 		else if (aKey > node->key) {
 			node->rightChild = deleteRecursive(node->rightChild, aKey);
 		}
@@ -85,21 +84,15 @@ public:
 
 	static TBSTNode* searchRecursive(TBSTNode* node, Key aKey) {
 		// Base case
-		if (node == nullptr || node->key == aKey) {
-			return node;
-		}
+		if (node == nullptr || node->key == aKey) return node;
 
-		if (aKey < node->key) {
-			return searchRecursive(node->leftChild, aKey);
-		}
+		if (aKey < node->key) return searchRecursive(node->leftChild, aKey);
 		return searchRecursive(node->rightChild, aKey);
 	}
 
 	// Visit the left subtree first, then process the current node, and finally traverse the right subtree
 	static void inorder(TBSTNode* node) {
-		if (!node) {
-			return;
-		}
+		if (!node) return;
 		inorder(node->leftChild);
 		std::cout << node->key << " ";
 		inorder(node->rightChild);
@@ -107,9 +100,7 @@ public:
 
 	// Visit the current node first, then you traverse its left subtree, and finally its right subtree
 	static void preorder(TBSTNode* node) {
-		if (!node) {
-			return;
-		}
+		if (!node) return;
 		std::cout << node->key << " ";
 		preorder(node->leftChild);
 		preorder(node->rightChild);
@@ -117,18 +108,15 @@ public:
 
 	// Visit the left and right subtrees first, and process the current node last
 	static void postorder(TBSTNode* node) {
-		if (!node) {
-			return;
-		}
+		if (!node) return;
 		postorder(node->leftChild);
 		postorder(node->rightChild);
 		std::cout << node->key << " ";
 	}
 
+	// Performs a Breadth-First Search (BFS), visit level by level
 	static void levelOrder(TBSTNode* root) {
-		if (!root) {
-			return;
-		}
+		if (!root) return;
 
 		std::queue<TBSTNode*> queue;
 		queue.push(root);
