@@ -16,6 +16,8 @@ add_executable(Assignment-03
         TBSTNode.hpp
         TAVLTreeNode.hpp
         TAVLTree.hpp
+        GenerateEmployeeID.cpp
+        GenerateEmployeeID.h
 )
 
 # Conditionally add the correct source file

@@ -1,5 +1,11 @@
-//
-// Created by jakub on 13.11.2025.
-//
-
 #include "TEmployee.h"
+
+#include "GenerateEmployeeID.h"
+
+TEmployee::TEmployee(std::string firstName, std::string lastName) : firstName(firstName), lastName(lastName) {
+    employeeID = GenerateEmployeeID();
+}
+
+int TEmployee::getEmployeeID() {
+    return employeeID;
+}
