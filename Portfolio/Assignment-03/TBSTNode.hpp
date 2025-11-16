@@ -28,6 +28,7 @@ public:
 		else if (aKey > node->key) {
 			node->rightChild = insertRecursive(node->rightChild, aKey, aData);
 		}
+		// If aKey == node->key, we do nothing since keys are guaranteed to be uniqu
 		return node;
 	}
 

@@ -18,27 +18,36 @@ private:
     }
 
     static TAVLTreeNode* rotateRight(TAVLTreeNode* y) {
-        TAVLTreeNode* x  = y->leftChild;
+        // 1. Identify the new root (y) and the subtree to move (T2)
+        TAVLTreeNode* x = y->leftChild;
         TAVLTreeNode* T2 = x->rightChild;
 
+        // 2. Perform the rotation
         x->rightChild = y;
-        y->leftChild  = T2;
+        y->leftChild = T2;
 
+        // 3. Update the heights
         y->height = 1 + std::max(getHeight(y->leftChild),getHeight(y->rightChild));
         x->height = 1 + std::max(getHeight(x->leftChild),getHeight(x->rightChild));
 
+        //4. Return the root of the subtree
         return x;
     }
 
     static TAVLTreeNode* rotateLeft(TAVLTreeNode* x) {
-        TAVLTreeNode* y  = x->rightChild;
+        // 1. Identify the new root (y) and the subtree to move (T2)
+        TAVLTreeNode* y = x->rightChild;
         TAVLTreeNode* T2 = y->leftChild;
 
-        y->leftChild  = x;
+        // 2. Perform the rotation
+        y->leftChild = x;
         x->rightChild = T2;
 
+        // 3. Update the heights
         x->height = 1 + std::max(getHeight(x->leftChild),getHeight(x->rightChild));
         y->height = 1 + std::max(getHeight(y->leftChild),getHeight(y->rightChild));
+
+        // 4. Return the root of the subtree
         return y;
     }
 
@@ -55,17 +64,18 @@ public:
         if (node == nullptr) return new TAVLTreeNode(aKey, aData);
 
         if (aKey < node->key) {
-            node->leftChild  = insertRecursive(node->leftChild, aKey, aData);
+            node->leftChild = insertRecursive(node->leftChild, aKey, aData);
         }
         else if (aKey > node->key) {
             node->rightChild = insertRecursive(node->rightChild, aKey, aData);
         }
+        // If aKey == node->key, we do nothing since keys are guaranteed to be unique
 
         node->height = 1 + std::max(getHeight(node->leftChild),getHeight(node->rightChild));
 
         int balance = getBalanceFactor(node);
 
-            // 1) Left-Left case
+        // 1) Left-Left case
         if (balance > 1 && aKey < node->leftChild->key)
             return rotateRight(node);
 
@@ -75,13 +85,17 @@ public:
 
         // 3) Left-Right case
         if (balance > 1 && aKey > node->leftChild->key) {
+            // First perform left rotation on nodes left child
             node->leftChild = rotateLeft(node->leftChild);
+            // After rotation, we have a Left-Left case so we only need to do a simple right rotate
             return rotateRight(node);
         }
 
         // 4) Right-Left case
         if (balance < -1 && aKey < node->rightChild->key) {
+            // First perform right rotation on nodes right child
             node->rightChild = rotateRight(node->rightChild);
+            // After rotation, we have a Right-Right case so we only need to do a simple left rotate
             return rotateLeft(node);
         }
         return node;
@@ -96,8 +110,6 @@ public:
         }
         return searchRecursive(node->rightChild, aKey);
     }
-
-
 };
 
 #endif
