@@ -24,6 +24,10 @@ public:
     std::string GetSource();
 
     static void PrintSong(TSong* aSong);
+    static TSong* PlayNextSong();
+    static TSong* UserAddSong();
+    static void ViewHistory(); // View all songs listened to
+    static void PlayPreviousSong(); // Puts previous song to front of wish queue
 
 private:
     std::string artist;
