@@ -13,7 +13,7 @@ static std::mt19937& GetPRNG() {
 static std::unordered_set<int> usedIDs;
 
 int GenerateEmployeeID() {
-    std::uniform_int_distribution<int> dist(0,  10000);
+    std::uniform_int_distribution<int> dist(100,  999); // Generate a 3 digit id
     int id;
     do {
         id = dist(GetPRNG());

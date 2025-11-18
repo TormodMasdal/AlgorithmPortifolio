@@ -12,9 +12,18 @@ private:
         return node ? node->height : 0;
     }
 
-        static int getBalanceFactor(TAVLTreeNode* node) {
+    static int getBalanceFactor(TAVLTreeNode* node) {
         if (node == nullptr) return 0;
         return getHeight(node->leftChild) - getHeight(node->rightChild);
+    }
+
+    // Helper function to find in-order successor(smallest value in the right subtree)
+    static TAVLTreeNode* findMinValueNode(TAVLTreeNode* node) {
+        TAVLTreeNode* current = node;
+        while (current && current->leftChild != nullptr) {
+            current = current->leftChild;
+        }
+        return current;
     }
 
     static TAVLTreeNode* rotateRight(TAVLTreeNode* y) {
@@ -51,6 +60,20 @@ private:
         return y;
     }
 
+    static TAVLTreeNode* rotateLeftRight(TAVLTreeNode* node) {
+        // First perform left rotation on nodes left child
+        node->leftChild = rotateLeft(node->leftChild);
+        // After rotation, we have a Left-Left case so we only need to do a simple right rotate
+        return rotateRight(node);
+    }
+
+    static TAVLTreeNode* rotateRightLeft(TAVLTreeNode* node) {
+        // First perform right rotation on nodes right child
+        node->rightChild = rotateRight(node->rightChild);
+        // After rotation, we have a Right-Right case so we only need to do a simple left rotate
+        return rotateLeft(node);
+    }
+
 public:
     Key key;
     Data data;
@@ -58,7 +81,6 @@ public:
     TAVLTreeNode* rightChild;
 
     TAVLTreeNode(Key aKey, Data aData) : key(aKey), data(aData), leftChild(nullptr), rightChild(nullptr), height(1) {}
-
 
     static TAVLTreeNode* insertRecursive(TAVLTreeNode* node, Key aKey, Data aData) {
         if (node == nullptr) return new TAVLTreeNode(aKey, aData);
@@ -82,31 +104,12 @@ public:
         if (balance < -1 && aKey > node->rightChild->key) return rotateLeft(node);
 
         // 3) Left-Right case
-        if (balance > 1 && aKey > node->leftChild->key) {
-            // First perform left rotation on nodes left child
-            node->leftChild = rotateLeft(node->leftChild);
-            // After rotation, we have a Left-Left case so we only need to do a simple right rotate
-            return rotateRight(node);
-        }
+        if (balance > 1 && aKey > node->leftChild->key) return rotateLeftRight(node);
 
         // 4) Right-Left case
-        if (balance < -1 && aKey < node->rightChild->key) {
-            // First perform right rotation on nodes right child
-            node->rightChild = rotateRight(node->rightChild);
-            // After rotation, we have a Right-Right case so we only need to do a simple left rotate
-            return rotateLeft(node);
-        }
-        return node;
-    }
+        if (balance < -1 && aKey < node->rightChild->key) return rotateRightLeft(node);
 
-    // Helper function to find in-order successor(smallest value in the right subtree)
-    static TAVLTreeNode* findMinValueNode(TAVLTreeNode* node)
-    {
-        TAVLTreeNode* current = node;
-        while (current && current->leftChild != nullptr) {
-            current = current->leftChild;
-        }
-        return current;
+        return node;
     }
 
     static TAVLTreeNode* deleteRecursive(TAVLTreeNode* node, Key aKey) {
@@ -162,16 +165,11 @@ public:
         if (balance < -1 && getBalanceFactor(node->rightChild) <= 0) return rotateLeft(node);
 
         // 3) Left-Right case
-        if (balance > 1 && getBalanceFactor(node->leftChild) < 0) {
-            node->leftChild = rotateLeft(node->leftChild);
-            return rotateRight(node);
-        }
+        if (balance > 1 && getBalanceFactor(node->leftChild) < 0) return rotateLeftRight(node);
 
         // 4) Right-Left case
-        if (balance < -1 && getBalanceFactor(node->rightChild) > 0) {
-            node->rightChild = rotateRight(node->rightChild);
-            return rotateLeft(node);
-        }
+        if (balance < -1 && getBalanceFactor(node->rightChild) > 0) return rotateRightLeft(node);
+
         return node;
     }
 
@@ -179,9 +177,7 @@ public:
         // Base case
         if (node == nullptr || node->key == aKey) return node;
 
-        if (aKey < node->key) {
-            return searchRecursive(node->leftChild, aKey);
-        }
+        if (aKey < node->key) return searchRecursive(node->leftChild, aKey);
         return searchRecursive(node->rightChild, aKey);
     }
 
@@ -236,6 +232,8 @@ public:
             level++;
         }
     }
+
+
 };
 
 #endif
