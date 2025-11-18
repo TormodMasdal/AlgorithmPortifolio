@@ -1,12 +1,10 @@
 // Option 2 (Advanced): Console Music Player.
 
-#include <iostream>
+
 #include "option2.h"
 #include "SharedLib.h"
-#include "../SharedLib/TLinkedList.h"
-#include "../SharedLib/TQueue.h"
+#include "../SharedLib/TLinkedList.hpp"
 #include "TSong.h"
-#include "../../LibExample/queue.hpp"
 #include "menu.h"
 
 
@@ -27,15 +25,9 @@ static bool SongReadCallback(const int aIndex, const int aTotalCount, const std:
 
 int RunApp() {
 
-	std::string filename = "C:/Users/tormo/IKT203Exam/IKT203Exam/DATA/songs.txt"; // Specify the path to the songs file
+	const std::string filename = "C:/Users/tormo/IKT203Exam/IKT203Exam/DATA/songs.txt"; // Specify the path to the songs file
 	ReadSongsFromFile(filename, SongReadCallback);
 
-
-
 	RunMenu();
-
-
-	
-
 	return 0;
 }

@@ -1,22 +1,22 @@
 #include "option1.h"
-#include <iostream>
-#include <limits>
-#include <utility>
-#include "TMinHeap.h"
+
+#include <map>
+
+#include "TGraph.h"
 
 #include "SharedLib.h"
 
-// Every node may be connected to multiple other nodes, therefore a vector, and every edge has a weight, therefore the int
-// This is a very long type which will be used multiple times, therefore give it a shorter name: GraphType
-using GraphType = std::unordered_map<std::string, std::vector<std::pair<std::string, int>>>;
 
-// Unordered map for adjacency list
-GraphType adjacencyList;
+TGraph graph(false, true);
+std::map<std::string, TVertex*> lookup;
 
 static bool NodeReadCallback(const int aIndex, const int aTotalCount, const std::string& aNode) {
 
-	// Initializes key in the adjacencyList
-	adjacencyList[aNode];
+	TVertex* vertex = new TVertex(aNode);
+
+	graph.AddVertex(vertex);
+
+	lookup[aNode] = vertex;
 
 	// Return true to continue reading
 	return true;
@@ -24,62 +24,14 @@ static bool NodeReadCallback(const int aIndex, const int aTotalCount, const std:
 
 static bool EdgeReadCallback(const int aIndex, const int aTotalCount, const std::string& aFromNode, const std::string& aToNode, float aWeight)
 {
-	// Adds the weight and node that's connected to the from node
-	adjacencyList[aFromNode].emplace_back(aToNode, aWeight);
+	TVertex* from = lookup[aFromNode];
+	TVertex* to = lookup[aToNode];
 
-	// Because the graph is undirected, and edge from A to B also means we must add an edge from B to A
-	adjacencyList[aToNode].emplace_back(aFromNode, aWeight);
+	graph.AddEdge(from, to, static_cast<int>(aWeight));
 
 	// Return true to continue reading
 	return true;
 }
-
-void DijkstrasAlgorithm(const GraphType& aGraph, const std::string& aSource, const std::string& aGoal) {
-
-	std::unordered_map<std::string, int> distances; // Saves shortest distance to
-	std::unordered_map<std::string, std::string> predecessors;
-
-	for (const auto& [node, _] : aGraph) {
-		distances[node] = std::numeric_limits<int>::max();
-		predecessors[node] = "";
-	}
-	distances[aSource] = 0;
-
-	TMinHeap minHeap;
-	minHeap.Add({aSource, 0}); // Adds the source to the minheap, giving it length of 0
-
-
-	while (minHeap.Size() != 0) {
-		auto [currentNode, currentDist] = minHeap.ExtractMin();
-
-		if (currentDist > distances[currentNode]) continue;
-		if (currentNode == aGoal) break;
-
-		for (const auto& [neighbor, weight] : aGraph.at(currentNode)) {
-			int newDist = currentDist + weight;
-			if (newDist < distances[neighbor]) {
-				distances[neighbor] = newDist;
-				predecessors[neighbor] = currentNode;
-				minHeap.Add({neighbor, newDist});
-			}
-		}
-	}
-
-	// Rekonstruer korteste vei
-	std::vector<std::string> path;
-	for (std::string at = aGoal; at != ""; at = predecessors[at]) {
-		path.push_back(at);
-	}
-	std::reverse(path.begin(), path.end());
-
-	std::cout << "Lowest latency path: ";
-	for (const auto& node : path) {
-		std::cout << node << " -> ";
-	}
-	std::cout << "(Total: " << distances[aGoal] << "ms)" << std::endl;
-}
-
-
 
 
 int RunApp() {
@@ -88,6 +40,51 @@ int RunApp() {
 
 	readGraphFromFile(filename, NodeReadCallback, EdgeReadCallback);
 
-	DijkstrasAlgorithm(adjacencyList, "WebServer", "Database");
-	return 0;
+	int choice = 0;
+	while (true) {
+		std::cout << "\n1. Find lowest latency path" << std::endl;
+		std::cout << "2. Exit" << std::endl;
+		std::cout << "Enter a choice: " << std::endl;
+		std::cin >> choice;
+		switch (choice) {
+
+			case 1: {
+				std::string from, to;
+				std::cout << "Enter source server: ";
+				std::cin >> from;
+
+				std::cout << "Enter Destination server: ";
+				std::cin >> to;
+
+				if (!lookup.count(from) || !lookup.count(to)) {
+					std::cout << "Invalid server name!\n";
+					return 0;
+				}
+
+				std::cout << "Lowest latency path from: "
+			  << from
+			  << " to: "
+			  << to
+			  << ":\n";
+
+				auto result = graph.Dijkstra(lookup[from], lookup[to]);
+
+				TStack<TVertex>* path = result.path;
+
+				for (int i = path->GetItemAmount()-1; i >= 0; i--) {
+					TVertex* v = path->Pop();
+					std::cout << v->GetName();
+					if (i >= 1) std::cout << " -> ";
+				}
+				delete path; // Delete so no leaked memory
+
+
+				std::cout << "\n(Total: " << result.totalDistance << "ms)\n";
+
+				break;
+			}
+			case 3: return 0;
+			default: std::cout << "Invalid input" << std::endl;
+		}
+	}
 }

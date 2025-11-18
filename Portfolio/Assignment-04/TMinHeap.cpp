@@ -1,60 +1,94 @@
 #include "TMinHeap.h"
 
-void TMinHeap::Add(const std::pair<std::string, int>& aItem) {
-    minHeap.push_back(aItem); // Push the new item to the back of the list
-    size_t i = minHeap.size() - 1; // Starts iterating from the index at the back
+TMinHeap::TMinHeap() : size(0) {
 
-    while (i > 0) { // While we are not at the root node
-        size_t parent = (i - 1) / 2; // Using "Tree" trick to get parent node
-        if (minHeap[i].second < minHeap[parent].second) { // If the cost of i is cheaper than its parent, swap them
-            auto temp = minHeap[i];
-            minHeap[i] = minHeap[parent];
-            minHeap[parent] = temp;
-            i = parent;
-        } else { // If no swap, then break
-            break;
-        }
+}
+
+bool TMinHeap::IsEmpty() const {
+    return size == 0;
+}
+
+void TMinHeap::Add(const THeapNode &aItem) {
+    if (size + 1 >= 500) return; // If heap is full, return
+
+    heap[++size] = aItem; // Increment size of heap, and add item to it
+    HeapifyUp(size); // Calls HepifyUp function from the last item, so it remains as a min-heap
+}
+
+THeapNode TMinHeap::ExtractMin() {
+    if (size == 0) return THeapNode(nullptr, -1); // Invalid if no item is in the heap
+
+    THeapNode root = heap[1]; // Root is always at pos 1 in a 1-based index (required for Tree "trick" in array)
+    heap[1] = heap[size]; // Push the vertex in the back of the heap to the root node
+    size--; // The heap will have 1 less item
+
+    HeapifyDown(1); // Calls heapifydown to get the new root element to correct position
+    return root;
+}
+
+int TMinHeap::Parent(int i) { // Tree trick
+    return i / 2;
+}
+
+int TMinHeap::Left(int i) {
+    return i * 2;
+}
+
+int TMinHeap::Right(int i) {
+    return i * 2 + 1;
+}
+
+bool TMinHeap::Compare(THeapNode &a, THeapNode &b) { // Compare distance of two edges
+    return a.GetDistance() < b.GetDistance();
+}
+
+// Crucial for keeping the min heap sorted
+// As long as the child is smaller than the parent, bubble up
+void TMinHeap::HeapifyUp(int i) {
+    while (i > 1 && Compare(heap[i], heap[Parent(i)])) {
+        THeapNode temp = heap[i];
+        heap[i] = heap[Parent(i)];
+        heap[Parent(i)] = temp;
+
+        i = Parent(i);
     }
 }
 
-std::pair<std::string, int> TMinHeap::ExtractMin() { // Returns the lowest path
-    if (minHeap.empty()) return {"", -1};
+// Crucial for keeping the min heap sorted
+void TMinHeap::HeapifyDown(int i) {
+    while (true)
+    {
+        int left = Left(i);
+        int right = Right(i);
+        int smallest = i;
 
-    auto extract = minHeap[0]; // Saves the lowest path, so we can return later
-    minHeap[0] = minHeap[minHeap.size() - 1]; // Sets the new lowest value to the one all the way in the back of the list
-    minHeap.pop_back(); // To avoid duplicates we can now remove the last item in the list
+        if (left <= size && Compare(heap[left], heap[smallest]))
+            smallest = left; // Left child is smaller than current smallest
 
-    size_t i = 0;
-    while (true) {
+        if (right <= size && Compare(heap[right], heap[smallest]))
+            smallest = right; // Right child is smaller than current smallest
 
-        // Uses "Tree" trick to get child nodes
-        size_t left = 2 * i + 1;
-        size_t right = 2 * i + 2;
-        size_t smallest = i;
+        if (smallest == i) // If smallest hasn't changed, break out the loop
+            break;
 
-        if (left < minHeap.size() && minHeap[left].second < minHeap[smallest].second) // If the left child exist, and its smaller than the parent node, change the smallest element
-            smallest = left;
-        if (right < minHeap.size() && minHeap[right].second < minHeap[smallest].second) // If the right child exist, and its smaller than the lowest node, change the smallest element
-            smallest = right;
-        if (smallest == i) break; // If the value hasn't changed, it is in correct position. Break.
+        // Swap
+        THeapNode temp = heap[i];
+        heap[i] = heap[smallest];
+        heap[smallest] = temp;
 
-        // Swap the lowest element with the earlier one
-        auto temp = minHeap[i];
-        minHeap[i] = minHeap[smallest];
-        minHeap[smallest] = temp;
         i = smallest;
     }
-
-    // Return the variabel we created earlier
-    return extract;
 }
 
-bool TMinHeap::Empty() const {
-    return minHeap.empty();
-}
 
-size_t TMinHeap::Size() const {
-    return minHeap.size();
-}
+
+
+
+
+
+
+
+
+
 
 

@@ -12,8 +12,14 @@ add_executable(Assignment-04
     main.cpp
         TMinHeap.cpp
         TMinHeap.h
-        Edge.cpp
-        Edge.h
+        TVertex.cpp
+        TVertex.h
+        TGraph.cpp
+        TGraph.h
+        TEdge.cpp
+        TEdge.h
+        THeapNode.cpp
+        THeapNode.h
 )
 
 if(BUILD_ASSIGNMENT_04_OPTION_1)

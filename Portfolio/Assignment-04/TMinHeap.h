@@ -1,16 +1,28 @@
 #ifndef MINHEAP_H
 #define MINHEAP_H
-#include <SharedLib.h>
+#include "THeapNode.h"
 
 class TMinHeap {
 public:
-    void Add(const std::pair<std::string, int>& aItem);
-    std::pair<std::string, int> ExtractMin();
-    bool Empty() const;
-    size_t Size() const;
+    TMinHeap(); // Constructor
+
+    bool IsEmpty() const;
+    void Add(const THeapNode& aItem);
+    THeapNode ExtractMin();
 
 private:
-    std::vector<std::pair<std::string, int>> minHeap;
+    int size;
+    THeapNode heap[500];
+
+    // Private helper functions
+    int Parent(int i);
+    int Left(int i);
+    int Right(int i);
+
+    bool Compare(THeapNode& a, THeapNode& b);
+
+    void HeapifyUp(int i);
+    void HeapifyDown(int i);
 };
 
 

@@ -12,14 +12,6 @@ add_executable(Assignment-01
     main.cpp
         TSong.cpp
         TSong.h
-        ../SharedLib/TLinkedList.cpp
-        ../SharedLib/TLinkedList.h
-        ../SharedLib/TNode.cpp
-        ../SharedLib/TNode.h
-        ../SharedLib/TQueue.cpp
-        ../SharedLib/TQueue.h
-        ../SharedLib/TStack.cpp
-        ../SharedLib/TStack.h
         menu.cpp
         menu.h
 )

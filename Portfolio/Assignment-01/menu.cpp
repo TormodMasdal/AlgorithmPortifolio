@@ -1,8 +1,8 @@
 #include "menu.h"
 #include "iostream"
-#include "../SharedLib/TLinkedList.h"
-#include "../SharedLib/TQueue.h"
-#include "../SharedLib/TStack.h"
+#include "../SharedLib/TLinkedList.hpp"
+#include "../SharedLib/TQueue.hpp"
+#include "../SharedLib/TStack.hpp"
 
 
 
@@ -49,12 +49,12 @@ void RunMenu() {
             case 3: songLibrary->PrintList();
                 break;
             case 4: {
-                TSong* mainSong = TQueue<TSong>::UserAddSong();
+                TSong* mainSong = TSong::UserAddSong();
                 MainQueue->Enqueue(mainSong);
                 break;
             }
             case 5: {
-                TSong* wishSong = TQueue<TSong>::UserAddSong();
+                TSong* wishSong = TSong::UserAddSong();
                 WishQueue->Enqueue(wishSong);
                 break;
             }
@@ -70,17 +70,16 @@ void RunMenu() {
             }
             case 8: {
                 // Only add the song to history stack when we change the song
-                if (currentlyPlaying != nullptr){ HistoryStack->Push(currentlyPlaying); HistoryStack; }
-                currentlyPlaying = TQueue<TSong>::PlayNextSong();
+                if (currentlyPlaying != nullptr){ HistoryStack->Push(currentlyPlaying); }
+                currentlyPlaying = TSong::PlayNextSong();
                 break;
             }
             case 9: {
-                TStack<TSong>::ViewHistory();
+                TSong::ViewHistory();
                 break;
             }
             case 10: {
-                if (currentlyPlaying != nullptr){ HistoryStack->Push(currentlyPlaying); HistoryStack; }
-                currentlyPlaying = TStack<TSong>::PlayPreviousSong();
+                TSong::PlayPreviousSong();
                 break;
             }
             case 11: TSong::PrintSong(currentlyPlaying);
