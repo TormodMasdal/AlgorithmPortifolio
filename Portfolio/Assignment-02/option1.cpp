@@ -23,7 +23,7 @@ static bool NameReadCallback(const int aIndex, const int aTotalCount, const std:
 int RunApp()
 {
 	// Path to the names data file
-	std::string filename = "F:\\IKT203\\VisualStudio\\DATA\\random_names.txt";
+	std::string filename = "random_names.txt";
 
 	std::cout << "Reading first 10 names from file: " << filename << "\n\n";
 

@@ -10,6 +10,14 @@ option(BUILD_ASSIGNMENT_03_OPTION_1 "Build Assignment Option 1 (Standard)" ON)
 
 add_executable(Assignment-03
     main.cpp
+        TEmployee.cpp
+        TEmployee.h
+        TBSTNode.hpp
+        TBSTNode.hpp
+        TAVLTreeNode.hpp
+        TAVLTree.hpp
+        GenerateEmployeeID.cpp
+        GenerateEmployeeID.h
 )
 
 # Conditionally add the correct source file

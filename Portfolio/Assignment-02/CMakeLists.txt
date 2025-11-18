@@ -6,7 +6,7 @@ set(CMAKE_AUTORCC ON)
 set(CMAKE_AUTOUIC ON)
 
 # "ON" = build Option 1, "OFF" = build Option 2.
-option(BUILD_ASSIGNMENT_02_OPTION_1 "Build Assignment Option 1 (Standard)" ON)
+option(BUILD_ASSIGNMENT_02_OPTION_1 "Build Assignment Option 1 (Standard)" OFF)
 
 add_executable(Assignment-02
     main.cpp
@@ -17,7 +17,7 @@ if(BUILD_ASSIGNMENT_02_OPTION_1)
     # If ON, add option1.cpp and define 'ASSIGNMENT_OPTION=1' for C++
     target_sources(Assignment-02
       PRIVATE
-        option1.cpp 
+        option1.cpp
         option1.h
     )
     target_compile_definitions(Assignment-02 PRIVATE "ASSIGNMENT_02_OPTION=1")
@@ -37,6 +37,12 @@ target_link_libraries(Assignment-02
 
 
 add_custom_command(TARGET Assignment-02 POST_BUILD
-  # Add a custom command here if needed
-  COMMAND ${CMAKE_COMMAND} -E echo "Assignment-02 post-build step"
+    # Add a custom command here if needed
+    COMMAND ${CMAKE_COMMAND} -E echo "Assignment-02 post-build step"
+
+    COMMAND ${CMAKE_COMMAND} -E make_directory
+    $<TARGET_FILE_DIR:Assignment-02>/../../DATA
+    COMMAND ${CMAKE_COMMAND} -E copy_directory
+    ${CMAKE_SOURCE_DIR}/DATA
+    $<TARGET_FILE_DIR:Assignment-02>/../../DATA
 )

@@ -1,8 +1,11 @@
-// Option 2 (Advanced): Console Music Player.
-
 #include "option2.h"
 
+#include <iostream>
+
+#include "include/TTestSuite.h"
+
 int RunApp() {
-	// Implement the Console Music Player application logic here
+	std::cout << "Running TestSuite\n";
+	TTestSuite::RunAll();
 	return 0;
 }
