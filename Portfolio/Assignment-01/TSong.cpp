@@ -1,6 +1,7 @@
 #include "TSong.h"
 
 #include <limits>
+#include <string>
 
 #include "TLinkedList.hpp"
 #include "TQueue.hpp"

@@ -18,6 +18,8 @@ add_executable(Assignment-03
         TAVLTree.hpp
         GenerateEmployeeID.cpp
         GenerateEmployeeID.h
+        Menu.cpp
+        Menu.h
 )
 
 # Conditionally add the correct source file

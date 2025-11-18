@@ -17,7 +17,7 @@ private:
         return getHeight(node->leftChild) - getHeight(node->rightChild);
     }
 
-    // Helper function to find in-order successor(smallest value in the right subtree)
+    // Helper function to find in-order successor (smallest key in the right subtree)
     static TAVLTreeNode* findMinValueNode(TAVLTreeNode* node) {
         TAVLTreeNode* current = node;
         while (current && current->leftChild != nullptr) {
@@ -61,14 +61,14 @@ private:
     }
 
     static TAVLTreeNode* rotateLeftRight(TAVLTreeNode* node) {
-        // First perform left rotation on nodes left child
+        // First perform left rotation on the nodes left child
         node->leftChild = rotateLeft(node->leftChild);
         // After rotation, we have a Left-Left case so we only need to do a simple right rotate
         return rotateRight(node);
     }
 
     static TAVLTreeNode* rotateRightLeft(TAVLTreeNode* node) {
-        // First perform right rotation on nodes right child
+        // First perform right rotation on the nodes right child
         node->rightChild = rotateRight(node->rightChild);
         // After rotation, we have a Right-Right case so we only need to do a simple left rotate
         return rotateLeft(node);
@@ -141,7 +141,7 @@ public:
                 node = node->leftChild;
                 delete temp;
             }
-            // Case 3: 2 children
+            // Case 3: Two children
             else {
                 TAVLTreeNode* temp = findMinValueNode(node->rightChild);
                 node->key = temp->key;
@@ -159,31 +159,45 @@ public:
         int balance = getBalanceFactor(node);
 
         // 1) Left-Left case
-        if (balance > 1 && getBalanceFactor(node->leftChild) >= 0) return rotateRight(node);
+        if (balance > 1 && getBalanceFactor(node->leftChild) >= 0) {
+            return rotateRight(node);
+        }
 
         // 2) Right-Right case
-        if (balance < -1 && getBalanceFactor(node->rightChild) <= 0) return rotateLeft(node);
+        if (balance < -1 && getBalanceFactor(node->rightChild) <= 0) {
+            return rotateLeft(node);
+        }
 
         // 3) Left-Right case
-        if (balance > 1 && getBalanceFactor(node->leftChild) < 0) return rotateLeftRight(node);
+        if (balance > 1 && getBalanceFactor(node->leftChild) < 0) {
+            return rotateLeftRight(node);
+        }
 
         // 4) Right-Left case
-        if (balance < -1 && getBalanceFactor(node->rightChild) > 0) return rotateRightLeft(node);
+        if (balance < -1 && getBalanceFactor(node->rightChild) > 0) {
+            return rotateRightLeft(node);
+        }
 
         return node;
     }
 
     static TAVLTreeNode* searchRecursive(TAVLTreeNode* node, Key aKey) {
         // Base case
-        if (node == nullptr || node->key == aKey) return node;
+        if (node == nullptr || node->key == aKey) {
+            return node;
+        }
 
-        if (aKey < node->key) return searchRecursive(node->leftChild, aKey);
+        if (aKey < node->key) {
+            return searchRecursive(node->leftChild, aKey);
+        }
         return searchRecursive(node->rightChild, aKey);
     }
 
     // Visit the left subtree first, then process the current node, and finally traverse the right subtree
     static void inorder(TAVLTreeNode* node) {
-        if (!node) return;
+        if (!node) {
+            return;
+        }
         inorder(node->leftChild);
         std::cout << node->key << " ";
         inorder(node->rightChild);
@@ -191,7 +205,9 @@ public:
 
     // Visit the current node first, then you traverse its left subtree, and finally its right subtree
     static void preorder(TAVLTreeNode* node) {
-        if (!node) return;
+        if (!node) {
+            return;
+        }
         std::cout << node->key << " ";
         preorder(node->leftChild);
         preorder(node->rightChild);
@@ -199,7 +215,10 @@ public:
 
     // Visit the left and right subtrees first, and process the current node last
     static void postorder(TAVLTreeNode* node) {
-        if (!node) return;
+        if (!node) {
+            return;
+        }
+
         postorder(node->leftChild);
         postorder(node->rightChild);
         std::cout << node->key << " ";
@@ -207,7 +226,9 @@ public:
 
     // Performs a Breadth-First Search (BFS), visit level by level
     static void levelOrder(TAVLTreeNode* root) {
-        if (!root) return;
+        if (!root) {
+            return;
+        }
 
         std::queue<TAVLTreeNode*> queue;
         queue.push(root);
@@ -224,16 +245,17 @@ public:
 
                 std::cout << node->key << " ";
 
-                if (node->leftChild)  queue.push(node->leftChild);
-                if (node->rightChild) queue.push(node->rightChild);
+                if (node->leftChild) {
+                    queue.push(node->leftChild);
+                }
+                if (node->rightChild) {
+                    queue.push(node->rightChild);
+                }
             }
-
             std::cout << std::endl;
             level++;
         }
     }
-
-
 };
 
 #endif

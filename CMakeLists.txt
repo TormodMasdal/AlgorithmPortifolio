@@ -22,7 +22,6 @@ endif()
 # defined before the executables that need to link to it.
 
 add_subdirectory(LibExample)
-add_subdirectory(Submissions)
 add_subdirectory(Portfolio)
 
 # --- End of File ---
