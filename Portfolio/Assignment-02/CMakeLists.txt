@@ -21,10 +21,10 @@ if(BUILD_ASSIGNMENT_02_OPTION_1)
     # If ON, add option1.cpp and define 'ASSIGNMENT_OPTION=1' for C++
     target_sources(Assignment-02
       PRIVATE
-        option2.cpp                                                # Sorry, but I had to hack this in order for it to work properly
-        option2.h
+        option1.cpp
+        option1.h
     )
-    target_compile_definitions(Assignment-02 PRIVATE "ASSIGNMENT_02_OPTION=2")
+    target_compile_definitions(Assignment-02 PRIVATE "ASSIGNMENT_02_OPTION=1")
 else()
     # If OFF, add option2.cpp and define 'ASSIGNMENT_OPTION=2' for C++
     target_sources(Assignment-02
