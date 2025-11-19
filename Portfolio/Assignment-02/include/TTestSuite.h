@@ -1,4 +1,5 @@
 #pragma once
+#include <string>
 
 /**
  * @brief Simple test runner that handles menu navigation and demos.

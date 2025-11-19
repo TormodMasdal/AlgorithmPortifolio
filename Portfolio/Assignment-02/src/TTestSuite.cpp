@@ -1,10 +1,10 @@
 #include "../include/TTestSuite.h"
+#include "../include/TCorporateDirectory.h"
+#include "../include/utils/TSearch.h"
+
 #include <iostream>
 #include <iomanip>
 #include <limits>
-
-#include "TCorporateDirectory.h"
-#include "TSearch.h"
 
 void TTestSuite::RunAll()
 {
@@ -12,7 +12,7 @@ void TTestSuite::RunAll()
     // INITIALIZING AND DATA READING
     // ============================================================
     TCorporateDirectory directory;
-    directory.LoadFromFile("DATA/random_names.txt");
+    directory.LoadFromFile("random_names.txt");
 
     std::cout << "Loaded: " << directory.Count() << " employees\n";
 
