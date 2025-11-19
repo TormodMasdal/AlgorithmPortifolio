@@ -127,6 +127,7 @@ public:
         else {
             // Case 1: No children
             if (node->leftChild == nullptr && node->rightChild == nullptr) {
+                delete node->data;
                 delete node; // Delete the node
                 node = nullptr; // Set it as nullptr because it still has an address
             }
@@ -134,18 +135,20 @@ public:
             else if (node->leftChild == nullptr) {
                 TAVLTreeNode* temp = node; // Store the node we want to delete
                 node = node->rightChild; // Move the right child
+                delete temp->data;
                 delete temp;
             }
             else if (node->rightChild == nullptr) {
                 TAVLTreeNode* temp = node;
                 node = node->leftChild;
+                delete temp->data;
                 delete temp;
             }
             // Case 3: Two children
             else {
                 TAVLTreeNode* temp = findMinValueNode(node->rightChild);
                 node->key = temp->key;
-                node->data = temp->data;
+                *(node->data) = *(temp->data); // Copy the value
                 node->rightChild = deleteRecursive(node->rightChild, temp->key);
             }
         }

@@ -9,3 +9,11 @@ TEmployee::TEmployee(std::string firstName, std::string lastName) : firstName(fi
 int TEmployee::getEmployeeID() {
     return employeeID;
 }
+
+std::string TEmployee::getFirstName() {
+    return firstName;
+}
+
+std::string TEmployee::getLastName() {
+    return lastName;
+}

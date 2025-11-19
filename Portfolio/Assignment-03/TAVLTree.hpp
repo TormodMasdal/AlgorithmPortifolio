@@ -15,6 +15,7 @@ private:
         }
         deleteAllNodes(node->leftChild); // Delete left subtree
         deleteAllNodes(node->rightChild); // Delete right subtree
+        delete node->data; // Delete nodes data
         delete node; // Delete current node
     }
 

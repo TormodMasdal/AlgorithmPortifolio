@@ -2,7 +2,7 @@
 
 #include <iostream>
 
-void menu(TBST<int, TEmployee> &bst, TAVLTree<int, TEmployee> &avlTree) {
+void menu(TBST<int, TEmployee*> &bst, TAVLTree<int, TEmployee*> &avlTree) {
     int choice = 0;
 
 	while (true) {
@@ -21,7 +21,7 @@ void menu(TBST<int, TEmployee> &bst, TAVLTree<int, TEmployee> &avlTree) {
 		std::cout << " 10. Level Order\n";
 		std::cout << "" << std::endl;
 		std::cout << " 11. Exit\n";
-		std::cout << "Enter your choice (1-9): ";
+		std::cout << "Enter your choice (1-9): \n";
 
 		std::cin >> choice;
 
@@ -30,30 +30,30 @@ void menu(TBST<int, TEmployee> &bst, TAVLTree<int, TEmployee> &avlTree) {
 				std::string firstName;
 				std::string lastName;
 
-				std::cout << "Enter the first name for the employee you want to insert : " << std::endl;
+				std::cout << "Enter the first name for the employee you want to insert : \n";
 				std::cin >> firstName;
-				std::cout << "Enter the first name for the employee you want to insert : " << std::endl;
+				std::cout << "Enter the last name for the employee you want to insert : \n";
 				std::cin >> lastName;
 
-				TEmployee newEmployee(firstName, lastName);
-				bst.insert(newEmployee.getEmployeeID(), newEmployee);
-				std::cout << "Inserted employee with ID: " << newEmployee.getEmployeeID() << std::endl;
+				auto* newEmployee = new TEmployee(firstName, lastName);
+				bst.insert(newEmployee->getEmployeeID(), newEmployee);
+				std::cout << "Inserted employee with ID: " << newEmployee->getEmployeeID() << std::endl;
 				break;
 			}
 			case 2: {
 				int keyToRemove = 0;
-				std::cout << "Enter the key for the employee you want to remove : " << std::endl;
+				std::cout << "Enter the key for the employee you want to remove : \n";
 				std::cin >> keyToRemove;
 				bst.remove(keyToRemove);
 				break;
 			}
 			case 3: {
 				int keyToSearch = 0;
-				std::cout << "Enter the key for the employee you want to search for : " << std::endl;
+				std::cout << "Enter the key for the employee you want to search for : \n";
 				std::cin >> keyToSearch;
 
 				if (bst.search(keyToSearch)) {
-					std::cout << "Employee with key " << keyToSearch << " was found!\n";
+					std::cout << "Employee with key " << keyToSearch << " was found thats\n";
 				}
 				else {
 					std::cout << "Employee with key " << keyToSearch << " wasn't found!\n";
@@ -64,29 +64,29 @@ void menu(TBST<int, TEmployee> &bst, TAVLTree<int, TEmployee> &avlTree) {
 				std::string firstName;
 				std::string lastName;
 
-				std::cout << "Enter the first name for the employee you want to insert : " << std::endl;
+				std::cout << "Enter the first name for the employee you want to insert : \n";
 				std::cin >> firstName;
-				std::cout << "Enter the first name for the employee you want to insert : " << std::endl;
+				std::cout << "Enter the last name for the employee you want to insert : \n";
 				std::cin >> lastName;
 
-				TEmployee newEmployee(firstName, lastName);
-				avlTree.insert(newEmployee.getEmployeeID(), newEmployee);
-				std::cout << "Inserted employee with ID: " << newEmployee.getEmployeeID() << std::endl;
+				auto* newEmployee = new TEmployee(firstName, lastName);
+				avlTree.insert(newEmployee->getEmployeeID(), newEmployee);
+				std::cout << "Inserted employee with ID: " << newEmployee->getEmployeeID() << std::endl;
 				break;
 			}
 			case 5: {
 				int keyToRemove = 0;
-				std::cout << "Enter the key for the employee you want to remove : " << std::endl;
+				std::cout << "Enter the key for the employee you want to remove : \n";
 				std::cin >> keyToRemove;
-				bst.remove(keyToRemove);
+				avlTree.remove(keyToRemove);
 				break;
 			}
 			case 6: {
 				int keyToSearch = 0;
-				std::cout << "Enter the key for the employee you want to search for : " << std::endl;
+				std::cout << "Enter the key for the employee you want to search for : \n";
 				std::cin >> keyToSearch;
 
-				if (bst.search(keyToSearch)) {
+				if (avlTree.search(keyToSearch)) {
 					std::cout << "Employee with key " << keyToSearch << " was found!\n";
 				}
 				else {
@@ -98,7 +98,7 @@ void menu(TBST<int, TEmployee> &bst, TAVLTree<int, TEmployee> &avlTree) {
 				int treeToTraverse = 0;
 				std::cout << "1. BST\n";
 				std::cout << "2. AVLTree\n";
-				std::cout << "Enter your choice for what tree you want to traverse (Inorder): " << std::endl;
+				std::cout << "Enter your choice for what tree you want to traverse (Inorder): \n";
 				std::cin >> treeToTraverse;
 				if (treeToTraverse == 1) {
 					bst.printInorder();
@@ -107,7 +107,7 @@ void menu(TBST<int, TEmployee> &bst, TAVLTree<int, TEmployee> &avlTree) {
 					avlTree.printInorder();
 				}
 				else {
-					std::cout << "Enter a valid choice" << std::endl;
+					std::cout << "Enter a valid choice!\n";
 				}
 				break;
 			}
@@ -115,7 +115,7 @@ void menu(TBST<int, TEmployee> &bst, TAVLTree<int, TEmployee> &avlTree) {
 				int treeToTraverse = 0;
 				std::cout << "1. BST\n";
 				std::cout << "2. AVLTree\n";
-				std::cout << "Enter your choice for what tree you want to traverse (Preorder): " << std::endl;
+				std::cout << "Enter your choice for what tree you want to traverse (Preorder): \n";
 				std::cin >> treeToTraverse;
 				if (treeToTraverse == 1) {
 					bst.printPreorder();
@@ -124,7 +124,7 @@ void menu(TBST<int, TEmployee> &bst, TAVLTree<int, TEmployee> &avlTree) {
 					avlTree.printPreorder();
 				}
 				else {
-					std::cout << "Enter a valid choice" << std::endl;
+					std::cout << "Enter a valid choice! \n";
 				}
 				break;
 			}
@@ -132,7 +132,7 @@ void menu(TBST<int, TEmployee> &bst, TAVLTree<int, TEmployee> &avlTree) {
 				int treeToTraverse = 0;
 				std::cout << "1. BST\n";
 				std::cout << "2. AVLTree\n";
-				std::cout << "Enter your choice for what tree you want to traverse (Postorder): " << std::endl;
+				std::cout << "Enter your choice for what tree you want to traverse (Postorder): \n";
 				std::cin >> treeToTraverse;
 				if (treeToTraverse == 1) {
 					bst.printPostorder();
@@ -141,7 +141,7 @@ void menu(TBST<int, TEmployee> &bst, TAVLTree<int, TEmployee> &avlTree) {
 					avlTree.printPostorder();
 				}
 				else {
-					std::cout << "Enter a valid choice" << std::endl;
+					std::cout << "Enter a valid choice! \n";
 				}
 				break;
 			}
@@ -149,7 +149,7 @@ void menu(TBST<int, TEmployee> &bst, TAVLTree<int, TEmployee> &avlTree) {
 				int treeToTraverse = 0;
 				std::cout << "1. BST\n";
 				std::cout << "2. AVLTree\n";
-				std::cout << "Enter your choice for what tree you want to traverse (Level Order): " << std::endl;
+				std::cout << "Enter your choice for what tree you want to traverse (Level Order): \n";
 				std::cin >> treeToTraverse;
 				if (treeToTraverse == 1) {
 					bst.printLevelOrder();
@@ -158,7 +158,7 @@ void menu(TBST<int, TEmployee> &bst, TAVLTree<int, TEmployee> &avlTree) {
 					avlTree.printLevelOrder();
 				}
 				else {
-					std::cout << "Enter a valid choice" << std::endl;
+					std::cout << "Enter a valid choice! \n";
 				}
 				break;
 			}

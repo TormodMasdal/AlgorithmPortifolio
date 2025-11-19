@@ -14,6 +14,9 @@ public:
     TEmployee(std::string firstName, std::string lastName);
 
     int getEmployeeID();
+
+    std::string getFirstName();
+    std::string getLastName();
 };
 
 
