@@ -10,7 +10,7 @@ TBST<int, TEmployee*> bst;
 TAVLTree<int, TEmployee*> avlTree;
 
 int totalAccountsCreated = 0;
-int maxAccounts = 5;
+int maxAccounts = 200;
 
 // Function for generating employees
 static bool GenerateEmployee(const int aIndex, const int aTotal, const std::string& aFirstName, const std::string& aLastName) {
